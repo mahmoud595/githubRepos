@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import { getdaysFromCertainDate } from "../../utils/helperFunctions";
 import {Repo} from "../../utils/types/githubReposTypes"

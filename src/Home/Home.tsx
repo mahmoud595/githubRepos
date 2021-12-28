@@ -11,9 +11,11 @@ import {
 import { MeasuredCellParent } from "react-virtualized/dist/es/CellMeasurer";
 
 import { GithubRepo } from "./GithubRepo/GithubRepo";
-import { useAxios } from "../utils/helperFunctions";
+import { getFirstDayFromMonth } from "../utils/helperFunctions";
+import {useAxios} from "../utils/customHooks"
 import {Repo} from "../utils/types/githubReposTypes"
-const url = process.env.REACT_APP_GITHUB_API;
+
+const URL = "https://api.github.com/search/repositories?sort=stars&order=desc";
 
 interface ListProps {
   index:number
@@ -37,7 +39,7 @@ const cache = new CellMeasurerCache({
 export const Home:React.FC = ():JSX.Element => {
   const [page, setPage] = useState<number>(1);
   const [repos, setRepos] = useState<[] | Repo[]>([]);
-  const { data, loading, error } = useAxios(url, page);
+  const { data, loading, error } = useAxios( `${URL}&q=created:%3E${getFirstDayFromMonth()}&page=${page}`);
 
   useEffect(() => {
     setRepos([...repos, ...data]);
